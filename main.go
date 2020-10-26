@@ -28,6 +28,28 @@ func ascendente(palabras []string) {
 	}
 }
 
+type PalabraDescendente []string
+
+func (a PalabraDescendente) Len() int           { return len(a) }
+func (a PalabraDescendente) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a PalabraDescendente) Less(i, j int) bool { return a[i] > a[j] }
+
+func descendente(palabras []string) {
+	file, err := os.Create("descendente.txt")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer file.Close()
+
+	sort.Sort(PalabraDescendente(palabras))
+
+	for _, v := range palabras {
+		file.WriteString(v)
+		file.WriteString("\n")
+	}
+}
+
 func main() {
 	var variable string
 	var arreglo []string
@@ -41,4 +63,5 @@ func main() {
 		}
 	}
 	ascendente(arreglo)
+	descendente(arreglo)
 }
