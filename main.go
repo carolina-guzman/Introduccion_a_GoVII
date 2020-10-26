@@ -3,7 +3,14 @@ package main
 import (
 	"fmt"
 	"os"
+	"sort"
 )
+
+type PalabraAscendente []string
+
+func (a PalabraAscendente) Len() int           { return len(a) }
+func (a PalabraAscendente) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a PalabraAscendente) Less(i, j int) bool { return a[i] < a[j] }
 
 func ascendente(palabras []string) {
 	file, err := os.Create("ascendente.txt")
@@ -12,6 +19,9 @@ func ascendente(palabras []string) {
 		return
 	}
 	defer file.Close()
+
+	sort.Sort(PalabraAscendente(palabras))
+
 	for _, v := range palabras {
 		file.WriteString(v)
 		file.WriteString("\n")
